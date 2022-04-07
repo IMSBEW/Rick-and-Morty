@@ -1,7 +1,6 @@
 import './filters.scss'
 
 const SearchPanel = ({ width }) => {
-    console.log(width)
     return (
         <div className="search">
             <input

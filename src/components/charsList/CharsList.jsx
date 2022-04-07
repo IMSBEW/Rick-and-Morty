@@ -4,7 +4,8 @@ import './../cardList/cardList.scss'
 
 import image from './../../assets/img/char.png'
 
-const CharList = () => {
+const CharList = ({ nameCategory }) => {
+    console.log(nameCategory)
     return (
         <div className="card-list">
             <div className="card-list__row">

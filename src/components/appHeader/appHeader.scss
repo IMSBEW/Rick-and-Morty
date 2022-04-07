@@ -1,0 +1,30 @@
+@import "../../styles/vars.scss";
+
+.header {
+    box-shadow: -2px 0px 8px 2px rgba(0, 0, 0, 0.1);
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+    margin-bottom: 26px;
+}
+
+.nav {
+    &__list {
+        display: flex;
+    }
+    &__item {
+        font-family: "Karla", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 21px;
+        padding: 0 12px;
+        cursor: pointer;
+        transition: color 0.3s;
+        &:hover {
+            color: lighten($color: #000000, $amount: 50);
+        }
+    }
+}

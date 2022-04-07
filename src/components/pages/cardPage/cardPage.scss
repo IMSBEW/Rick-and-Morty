@@ -1,0 +1,42 @@
+.card-page {
+    &__info {
+        margin-bottom: 64px;
+    }
+    &__row {
+        position: relative;
+    }
+    &__body {
+        display: flex;
+        justify-content: center;
+    }
+    &__title {
+        font-size: 36px;
+        color: #081f32;
+        margin-bottom: 24px;
+    }
+    &__category {
+        display: flex;
+    }
+    &__category-wrapper {
+        margin-right: 30px;
+    }
+    &__category-title {
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.15px;
+        color: #081f32;
+    }
+    &__category-info {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.25px;
+        color: #6e798c;
+    }
+    &__name {
+        font-weight: 500;
+        font-size: 20px;
+        letter-spacing: 0.15px;
+        color: #8e8e93;
+    }
+}

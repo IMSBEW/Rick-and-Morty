@@ -1,0 +1,35 @@
+[33mcommit a42352cdcb53ffa4dadd26fd9b84235272160bfd[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Wed Feb 23 03:10:00 2022 +0300
+
+    create component CharacterPage
+
+[33mcommit 3d16f327b7756f926e036608a4eba1efa687b6c8[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Wed Feb 23 02:21:40 2022 +0300
+
+    create component CardPage
+
+[33mcommit 35557aa37fa416dc9189dcb5ea7d1287b919a009[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Tue Feb 22 03:22:21 2022 +0300
+
+    create component EpisodesListPage
+
+[33mcommit 890d0ba5eada9f4d25b236d7b13dbbc8457635a7[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Tue Feb 22 02:41:42 2022 +0300
+
+    create component LocationsListPage
+
+[33mcommit 169844868267aa808e1117c2ba5087c840e43254[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Sat Feb 19 01:00:09 2022 +0300
+
+    create CharctersListPage
+
+[33mcommit 6515441e48d248fa0a8337fa411e5f4607d6ed68[m
+Author: Andrey <ansugako@gmail.com>
+Date:   Tue Feb 15 19:16:17 2022 +0300
+
+    Initialize project using Create React App

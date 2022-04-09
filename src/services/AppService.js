@@ -5,21 +5,19 @@ import { useHttp } from "../hooks/http.hook"
 const useAppService = () => {
     const { loading, request, error, clearError } = useHttp()
 
-    const [nameCategory, setNameCategory] = useState('')
-
-    const createRequest = (category) => {
-        setNameCategory(category)
-    }
-
-    const getAllCharacters = async () => {
-        console.log(nameCategory)
-        const res = await request(`https://rickandmortyapi.com/api/character`)
-        return res.results.map(_transformCharacter)
+    const getAllCharacters = async (offset, amount, category) => {
+        // console.log(offset)
+        const response = await request(`https://rickandmortyapi.com/api/character/?page=${offset}`)
+        // console.log(response)
+        const charList = response.results.map(_transformCharacter)
+        charList.map((item, index) => item.count = index + 1 + amount)
+        return charList
     }
 
 
     const _transformCharacter = (char) => {
         return {
+            count: char.count,
             id: char.id,
             name: char.name,
             status: char.status,
@@ -36,7 +34,6 @@ const useAppService = () => {
         error,
         clearError,
         getAllCharacters,
-        createRequest
     }
 }
 

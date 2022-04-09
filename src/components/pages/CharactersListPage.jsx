@@ -27,8 +27,6 @@ const CharactersListPage = () => {
         setNameCategory(name)
     }
 
-    console.log(nameCategory)
-
     const filters = Object.entries(arrNameCategory).map((item, index) => {
         return (
             <FilterPanel nameFilter={item[0]} key={index} nameCategory={item[1]} onClickName={getNameCategory} />

@@ -10,53 +10,77 @@ import './../cardList/cardList.scss'
 const CharList = ({ nameCategory }) => {
     const [charList, setCharList] = useState([])
     const [newItemLoading, setNewItemLoading] = useState(false)
-    const [offset, setOffset] = useState(1)
-    const [amount, setAmount] = useState(0)
-    const [indent, setIndent] = useState(0)
-    const [category, setCategory] = useState('')
+    const [offset, setOffset] = useState(2)
+    const [req, setReq] = useState('')
+    const [amount, setAmount] = useState(20)
+    const [indent, setIndent] = useState(8)
+    // const [category, setCategory] = useState('')
     const [charEnded, setCharEnded] = useState(false)
 
-    const { loading, error, getAllCharacters, } = useAppService()
-
-
-    // console.log(charList)
-    console.log(category)
-
+    const { loading, error, getAllFilterChars, getAllChars } = useAppService()
 
     useEffect(() => {
-        onRequest(offset, amount, category, true)
+        onRequestFilter(nameCategory)
+        setIndent(8)
+    }, [nameCategory])
 
-    }, [])
+    const onRequestFilter = (category) => {
+        getAllFilterChars(category)
+            .then(onCharListFilterLoaded)
+    }
 
-    const onRequest = (offset, amount, category, initial) => {
-        initial ? setNewItemLoading(false) : setNewItemLoading(true)
-        getAllCharacters(offset, amount, category)
-            .then(onCharListLoaded)
+    const onCharListFilterLoaded = (newCharList) => {
+        setOffset(2)
+        setAmount(20)
+        setCharList(newCharList[1])
+        setReq(newCharList[0])
+    }
+
+    const onRequest = (req, offset, amount) => {
+        setIndent(indent => indent + 8)
+        if (req !== null) {
+            getAllChars(req, offset, amount)
+                .then(onCharListLoaded)
+                .catch(onLog)
+        }
     }
 
     const onCharListLoaded = (newCharList) => {
-        // setCharList(charList => [...charList, ...newCharList])
-        setNewItemLoading(false)
-        setIndent(indent => indent + 8)
-        setCategory(nameCategory)
         if (charList.length - indent <= 8) {
             setOffset(offset => offset + 1)
             setAmount(amount => amount + 20)
             setCharList(charList => [...charList, ...newCharList])
         } else {
-            setCharList(charList => [...charList])
+            setCharList(charList)
         }
-
-        // setAmount(amount => amount + 20)
     }
 
-    // const newChars = charList.slice(0, indent)
+    const onLog = (newCharList) => {
+        console.error(newCharList)
+    }
 
-    // console.log(newChars)
 
-    // const indentChar = () => {
 
+    // const onRequest = (offset, amount, category, initial) => {
+    //     initial ? setNewItemLoading(false) : setNewItemLoading(true)
+    //     getAllCharacters(offset, amount, category)
+    //         .then(onCharListLoaded)
     // }
+
+    // const onCharListLoaded = (newCharList) => {
+    //     setNewItemLoading(false)
+    //     setIndent(indent => indent + 8)
+    //     // setCategory(nameCategory)
+    //     if (charList.length - indent <= 8) {
+    //         setOffset(offset => offset + 1)
+    //         setAmount(amount => amount + 20)
+    //         setCharList(charList => [...charList, ...newCharList])
+    //     } else {
+    //         setCharList(charList => [...charList])
+    //     }
+    // }
+
+
 
     function renderItems(arr) {
         const items = arr.map((item, index) => {
@@ -69,7 +93,7 @@ const CharList = ({ nameCategory }) => {
                             </div>
                             <div className="card__info" style={{ textAlign: 'left' }} >
                                 <div className="card__title">{item.name}</div>
-                                <div className="card__text">{item.gender}</div>
+                                <div className="card__text">{item.species}</div>
                             </div>
                         </div>
                     </li >
@@ -85,11 +109,20 @@ const CharList = ({ nameCategory }) => {
 
     const items = renderItems(charList)
 
+    const errorMessage = error ? <ErrorMessage /> : null
+    const spinner = loading ? <Spinner /> : null
+
     return (
         <div className="card-list">
+            {errorMessage}
+            {spinner}
             {items}
             <div className="button">
-                <button onClick={() => onRequest(offset, amount)} className="button-load">Load more</button>
+                <button
+                    disabled={newItemLoading}
+                    onClick={() => onRequest(req, offset, amount)}
+                    className="button-load">Load more
+                </button>
             </div>
         </div>
     )

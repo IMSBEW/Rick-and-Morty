@@ -36,27 +36,26 @@ const CharList = ({ nameCategory }) => {
         setReq(newCharList[0])
     }
 
-    const onRequest = (req, offset, amount) => {
+    const onRequest = (req, offset, amount, initial) => {
+        initial ? setNewItemLoading(false) : setNewItemLoading(true)
         setIndent(indent => indent + 8)
         if (req !== null) {
             getAllChars(req, offset, amount)
                 .then(onCharListLoaded)
-                .catch(onLog)
         }
     }
 
-    const onCharListLoaded = (newCharList) => {
+    const onCharListLoaded = (data) => {
+        const [chars, pages] = data
+        console.log(pages)
         if (charList.length - indent <= 8) {
-            setOffset(offset => offset + 1)
+            setOffset(offset => offset !== pages ? offset + 1 : offset)
             setAmount(amount => amount + 20)
-            setCharList(charList => [...charList, ...newCharList])
+            setCharList(charList => [...charList, ...chars])
+            setNewItemLoading(false)
         } else {
             setCharList(charList)
         }
-    }
-
-    const onLog = (newCharList) => {
-        console.error(newCharList)
     }
 
 
@@ -120,7 +119,7 @@ const CharList = ({ nameCategory }) => {
             <div className="button">
                 <button
                     disabled={newItemLoading}
-                    onClick={() => onRequest(req, offset, amount)}
+                    onClick={() => onRequest(req, offset, amount, true)}
                     className="button-load">Load more
                 </button>
             </div>

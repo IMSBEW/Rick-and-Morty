@@ -18,11 +18,12 @@ const useAppService = () => {
         const re = /page=2/gi
         const newFilterStr = req.replace(re, `page=${offset}`)
         const response = await request(`${newFilterStr}`)
+        console.log(response)
         // if (response.info.next === null) return
 
         const charList = response.results.map(_transformCharacter)
         charList.map((item, index) => item.count = index + 1 + amount)
-        return charList
+        return [charList, response.info.pages]
     }
 
     // const getAllCharacters = async (offset, amount, category) => {

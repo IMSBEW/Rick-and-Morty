@@ -48,9 +48,6 @@
     &__name {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        width: 240px;
-        height: 56px;
         font-size: 16px;
         line-height: 19px;
         color: rgba(0, 0, 0, 0.6);
@@ -60,7 +57,24 @@
     }
 }
 
+.name {
+    justify-content: space-between;
+    width: 240px;
+    height: 56px;
+    font-size: 16px;
+}
+
+.category {
+    font-weight: 500;
+    width: 118px;
+    height: 46px;
+    font-size: 14px;
+}
+
 .sub-menu__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     transform: scaleY(0);
     transform-origin: 0 0;
     position: absolute;

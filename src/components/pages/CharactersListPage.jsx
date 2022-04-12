@@ -10,13 +10,19 @@ import banner from '../../assets/img/charspagebanner.png'
 
 const CharactersListPage = () => {
     const [nameCategory, setNameCategory] = useState('')
+    const [nameFilter, setNameFilter] = useState('')
 
     const arrNameCategory = {
         Species: [
-            'Species', 'Gender', 'Status'
+            'human', 'alien',
+            'humanoid', 'unknown',
+            'poopybutthole', 'mythologi',
+            'animal', 'robot', 'cronenberg',
+            'disease'
         ],
         Gender: [
-            'female', 'male', 'genderless', 'unknown'
+            'female', 'male',
+            'genderless', 'unknown'
         ],
         Status: [
             'alive', 'dead', 'unknown'
@@ -27,9 +33,13 @@ const CharactersListPage = () => {
         setNameCategory(name)
     }
 
+    const getNameFilter = (name) => {
+        setNameFilter(name)
+    }
+
     const filters = Object.entries(arrNameCategory).map((item, index) => {
         return (
-            <FilterPanel nameFilter={item[0]} key={index} nameCategory={item[1]} onClickName={getNameCategory} />
+            <FilterPanel nameFilter={item[0]} key={index} nameCategory={item[1]} onClickName={getNameCategory} onMouseOverFilter={getNameFilter} />
         )
 
     })
@@ -41,7 +51,7 @@ const CharactersListPage = () => {
                 <SearchPanel />
                 {filters}
             </div>
-            <CharList nameCategory={nameCategory} />
+            <CharList nameCategory={nameCategory} nameFilter={nameFilter} />
         </>
     )
 }

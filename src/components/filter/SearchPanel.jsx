@@ -1,14 +1,21 @@
 import './filters.scss'
 
-const SearchPanel = ({ width }) => {
+const SearchPanel = ({ onUpdateSearch }) => {
+    const getSearchRequest = (e) => {
+        onUpdateSearch(e.target.value)
+    }
+
     return (
         <div className="search">
-            <input
-                type="text"
-                className="filter__item"
-                placeholder="Filter by name..."
-                style={{ width: width }}
-            />
+            <form className='search-form'>
+                <input
+                    type="text"
+                    className="filter__item"
+                    placeholder="Filter by name..."
+                    // style={{ width: width }}
+                    onChange={getSearchRequest}
+                />
+            </form>
         </div>
     )
 }

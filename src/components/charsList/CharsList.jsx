@@ -7,7 +7,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage'
 
 import './../cardList/cardList.scss'
 
-const CharList = ({ nameCategory, nameFilter }) => {
+const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
     const [charList, setCharList] = useState([])
     const [newItemLoading, setNewItemLoading] = useState(false)
     const [offset, setOffset] = useState(2)
@@ -16,19 +16,21 @@ const CharList = ({ nameCategory, nameFilter }) => {
     const [amountChars, setAmountChars] = useState(20)
     const [indent, setIndent] = useState(8)
 
-    const { loading, error, getAllFilterChars, getAllChars } = useAppService()
+    const { loading, error, clearError, getAllFilterChars, getAllChars } = useAppService()
 
     useEffect(() => {
-        onRequestFilter(nameCategory, nameFilter)
+        onRequestFilter(nameCategory, nameFilter, searchRequest, true)
         setIndent(8)
-    }, [nameCategory])
+    }, [nameCategory, searchRequest])
 
-    console.log(amountChars, indent)
 
-    const onRequestFilter = (category, filter) => {
-        getAllFilterChars(category, filter)
+    const onRequestFilter = (category, filter, search, initial) => {
+        initial ? setNewItemLoading(false) : setNewItemLoading(true)
+        clearError()
+        getAllFilterChars(category, filter, search)
             .then(onCharListFilterLoaded)
     }
+
 
     const onCharListFilterLoaded = (newCharList) => {
         setOffset(2)
@@ -38,9 +40,9 @@ const CharList = ({ nameCategory, nameFilter }) => {
     }
 
     const onRequest = (req, offset, amount, initial) => {
-        initial ? setNewItemLoading(false) : setNewItemLoading(true)
         setIndent(indent => indent + 8)
         if (req !== null) {
+            clearError()
             getAllChars(req, offset, amount)
                 .then(onCharListLoaded)
         }
@@ -49,11 +51,12 @@ const CharList = ({ nameCategory, nameFilter }) => {
     const onCharListLoaded = (data) => {
         const [chars, pages, amountChars] = data
         setAmountChars(amountChars)
+        setNewItemLoading(false)
         if (charList.length - indent <= 8) {
             setOffset(offset => offset !== pages ? offset + 1 : offset)
             setAmount(amount => amount + 20)
             setCharList(charList => [...charList, ...chars])
-            setNewItemLoading(false)
+
         } else {
             setCharList(charList)
         }
@@ -61,7 +64,7 @@ const CharList = ({ nameCategory, nameFilter }) => {
 
     function renderItems(arr) {
         const items = arr.map((item, index) => {
-            if (item.count <= indent) {
+            if (item.count <= indent && !error) {
                 return (
                     <li key={index} className='card' href='#'>
                         <div className="card__wrapper">
@@ -84,7 +87,7 @@ const CharList = ({ nameCategory, nameFilter }) => {
         )
     }
 
-    function createButton() {
+    const createButton = () => {
         return (
             <button
                 disabled={newItemLoading}
@@ -99,17 +102,13 @@ const CharList = ({ nameCategory, nameFilter }) => {
     const errorMessage = error ? <ErrorMessage /> : null
     const spinner = loading ? <Spinner /> : null
 
-
-
-    const button = createButton()
-
     return (
         <div className="card-list">
             {errorMessage}
             {spinner}
             {items}
             <div className="button">
-                {amountChars >= indent && !error ? button : null}
+                {amountChars >= indent && !error && charList.length > 8 ? createButton() : null}
             </div>
         </div>
     )

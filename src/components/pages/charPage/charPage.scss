@@ -12,7 +12,9 @@
         object-fit: cover;
     }
     &__title {
+        max-width: 600px;
         font-size: 48px;
+        text-align: center;
         line-height: 56px;
         color: #081f32;
         margin: 16px 0 42px 0;

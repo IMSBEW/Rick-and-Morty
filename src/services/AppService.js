@@ -17,6 +17,11 @@ const useAppService = () => {
         return [charList, response.info.pages, response.info.count]
     }
 
+    const getChar = async (id) => {
+        const response = await request(`https://rickandmortyapi.com/api/character/${id}`)
+        return _transformCharacter(response)
+    }
+
     const _transformCharacter = (char) => {
         return {
             count: char.count,
@@ -24,8 +29,8 @@ const useAppService = () => {
             name: char.name,
             status: char.status,
             species: char.species,
-            type: char.type,
             gender: char.gender,
+            origin: char.origin.name,
             location: char.location.name,
             thumbnail: char.image
         }
@@ -36,7 +41,8 @@ const useAppService = () => {
         error,
         clearError,
         getAllFilterChars,
-        getAllChars
+        getAllChars,
+        getChar
     }
 }
 

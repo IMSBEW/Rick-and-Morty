@@ -1,5 +1,5 @@
-import Filters from '../filter/Filters'
-import CardsList from '../cardList/CardsList'
+import Filters from '../filter/FilterPanel'
+// import CardsList from '../cardList/CardsList'
 
 import banner from '../../assets/img/locationspagebanner.png'
 
@@ -8,7 +8,7 @@ function LocationsListPage() {
         <>
             <img className="banner" src={banner} alt="banner" />
             <Filters />
-            <CardsList />
+            {/* <CardsList /> */}
         </>
     )
 }

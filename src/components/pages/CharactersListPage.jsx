@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import SearchPanel from '../filter/SearchPanel'
 import FilterPanel from '../filter/FilterPanel'
@@ -42,6 +42,20 @@ const CharactersListPage = () => {
         setSearchRequest(req)
     }
 
+    const clearFilter = () => {
+        setNameCategory('')
+    }
+
+    const buttonClearFilter = () => {
+        return (
+            <button
+                onClick={() => clearFilter()}
+                className="button-filter">Clear filter
+            </button>
+        )
+    }
+
+
     const filters = Object.entries(arrNameCategory).map((item, index) => {
         return (
             <FilterPanel
@@ -53,25 +67,15 @@ const CharactersListPage = () => {
         )
     })
 
-    useEffect(() => {
-        const selectedFilter = () => {
-            return (
-                <>
-                    <p>{nameFilter}={nameCategory}</p>
-                </>
-            )
-        }
-    }, [nameCategory])
-
-
-
-
     return (
         <>
             <img className="banner" src={banner} alt="banner" />
             <div className="filter__wrapper">
                 <SearchPanel onUpdateSearch={getSearchRequest} />
                 {filters}
+            </div>
+            <div className="button">
+                {nameCategory ? buttonClearFilter() : null}
             </div>
             <CharList
                 nameCategory={nameCategory}

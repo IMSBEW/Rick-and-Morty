@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import useAppService from '../../services/AppService'
 
@@ -32,14 +33,15 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
     }
 
 
-    const onCharListFilterLoaded = (newCharList) => {
+    const onCharListFilterLoaded = (data) => {
+        const [request, chars] = data
         setOffset(2)
         setAmount(20)
-        setCharList(newCharList[1])
-        setReq(newCharList[0])
+        setCharList(chars)
+        setReq(request)
     }
 
-    const onRequest = (req, offset, amount, initial) => {
+    const onRequest = (req, offset, amount) => {
         setIndent(indent => indent + 8)
         if (req !== null) {
             clearError()
@@ -67,15 +69,17 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
             if (item.count <= indent && !error) {
                 return (
                     <li key={index} className='card' href='#'>
-                        <div className="card__wrapper">
-                            <div className="card__image">
-                                <img src={item.thumbnail} alt={item.name} />
+                        <Link to={`/char/${item.id}`}>
+                            <div className="card__wrapper">
+                                <div className="card__image">
+                                    <img src={item.thumbnail} alt={item.name} />
+                                </div>
+                                <div className="card__info" style={{ textAlign: 'left' }} >
+                                    <div className="card__title">{item.name}</div>
+                                    <div className="card__text">{item.species}</div>
+                                </div>
                             </div>
-                            <div className="card__info" style={{ textAlign: 'left' }} >
-                                <div className="card__title">{item.name}</div>
-                                <div className="card__text">{item.species}</div>
-                            </div>
-                        </div>
+                        </Link>
                     </li >
                 )
             }
@@ -87,30 +91,32 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
         )
     }
 
-    const createButton = () => {
+    const items = renderItems(charList)
+
+    const buttonLoad = () => {
         return (
             <button
                 disabled={newItemLoading}
-                onClick={() => onRequest(req, offset, amount, true)}
+                onClick={() => onRequest(req, offset, amount)}
                 className="button-load">Load more
             </button>
         )
     }
-
-    const items = renderItems(charList)
-
     const errorMessage = error ? <ErrorMessage /> : null
     const spinner = loading ? <Spinner /> : null
 
     return (
-        <div className="card-list">
-            {errorMessage}
-            {spinner}
-            {items}
-            <div className="button">
-                {amountChars >= indent && !error && charList.length > 8 ? createButton() : null}
+        <>
+
+            <div className="card-list">
+                {errorMessage}
+                {spinner}
+                {items}
+                <div className="button">
+                    {amountChars >= indent && !error && charList.length > 8 ? buttonLoad() : null}
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

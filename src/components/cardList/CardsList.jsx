@@ -1,5 +1,4 @@
 import AppCard from '../appCard/AppCard'
-import ButtonLoad from '../buttons/ButtonLoad'
 
 import './cardList.scss'
 
@@ -16,7 +15,6 @@ const CardsList = () => {
                 <AppCard />
                 <AppCard />
             </div>
-            <ButtonLoad />
         </div>
     )
 }

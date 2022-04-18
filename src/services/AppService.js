@@ -4,18 +4,14 @@ const useAppService = () => {
     const { loading, request, error, clearError } = useHttp()
 
     const getAllFilterChars = async (category, filter, searchRequest) => {
-        console.log(searchRequest)
-        const str = `https://rickandmortyapi.com/api/character/?${filter}=${category}`
         const response = await request(`https://rickandmortyapi.com/api/character/?name=${searchRequest}&${filter}=${category}`)
         const charList = response.results.map(_transformCharacter)
         charList.map((item, index) => item.count = index + 1)
-        return [response.info.next, charList, str]
+        return [response.info.next, charList]
     }
 
     const getAllChars = async (req, offset, amount) => {
-        const re = /page=2/gi
-        const newFilterStr = req.replace(re, `page=${offset}`)
-        const response = await request(`${newFilterStr}`)
+        const response = await request(`${req.replace(/page=2/gi, `page=${offset}`)}`)
         const charList = response.results.map(_transformCharacter)
         charList.map((item, index) => item.count = index + 1 + amount)
         return [charList, response.info.pages, response.info.count]

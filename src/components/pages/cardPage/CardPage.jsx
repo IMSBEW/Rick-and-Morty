@@ -1,4 +1,4 @@
-import ButtonBack from "../../buttons/ButtonBack"
+// import ButtonBack from "../../buttons/ButtonBack"
 import CharsList from "../../charsList/CharsList"
 
 import './cardPage.scss'
@@ -8,7 +8,7 @@ function CardPage() {
         <div className="card-page">
             <div className="card-page__info">
                 <div className="card-page__row">
-                    <ButtonBack />
+                    {/* <ButtonBack /> */}
                     <div className="card-page__body">
                         <div className="card-page__wrapper">
                             <div className="card-page__title">Earth (Replacement Dimension)

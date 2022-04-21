@@ -18,8 +18,16 @@ const useAppService = () => {
     }
 
     const getChar = async (id) => {
+
         const response = await request(`https://rickandmortyapi.com/api/character/${id}`)
+
         return _transformCharacter(response)
+    }
+
+    const getEpisodesId = async (id) => {
+        const response = await request(`https://rickandmortyapi.com/api/episode/${id}`)
+        console.log(response)
+        return response.map(_transformEpisode)
     }
 
     const _transformCharacter = (char) => {
@@ -32,7 +40,16 @@ const useAppService = () => {
             gender: char.gender,
             origin: char.origin.name,
             location: char.location.name,
-            thumbnail: char.image
+            thumbnail: char.image,
+            episode: char.episode
+        }
+    }
+
+    const _transformEpisode = (episode) => {
+        return {
+            episode: episode.episode,
+            date: episode.air_date,
+            name: episode.name
         }
     }
 
@@ -42,7 +59,8 @@ const useAppService = () => {
         clearError,
         getAllFilterChars,
         getAllChars,
-        getChar
+        getChar,
+        getEpisodesId
     }
 }
 

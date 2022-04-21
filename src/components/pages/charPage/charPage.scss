@@ -23,6 +23,7 @@
         display: flex;
         justify-content: space-between;
         padding-left: 80px;
+        margin-bottom: 40px;
     }
     &__column {
         display: inline;
@@ -43,9 +44,23 @@
             background-color: rgba(33, 33, 33, 0.08);
             width: 395px;
         }
+        &-column {
+            max-height: 306px;
+            overflow-y: auto;
+            overflow-x: visible;
+            &::-webkit-scrollbar {
+                width: 7px;
+                background-color: #edf0f0;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: #081f32;
+                border-radius: 10px;
+            }
+        }
         &-wrapper {
             display: flex;
             justify-content: space-between;
+            // flex-direction: column;
             img {
                 padding-right: 20px;
                 cursor: pointer;

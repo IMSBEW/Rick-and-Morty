@@ -26,9 +26,12 @@ const useAppService = () => {
 
     const getEpisodesId = async (id) => {
         const response = await request(`https://rickandmortyapi.com/api/episode/${id}`)
-        console.log(response)
-        return response.map(_transformEpisode)
+        if (id.length > 1) return response.map(_transformEpisode)
+        const arrResponse = []
+        arrResponse.push(response)
+        return arrResponse.map(_transformEpisode)
     }
+
 
     const _transformCharacter = (char) => {
         return {

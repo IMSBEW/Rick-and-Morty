@@ -36,7 +36,6 @@ function CharPage() {
 
     const updateEpisode = () => {
         clearError()
-        console.log(countEpisode)
         getEpisodesId(countEpisode)
             .then(onEpisodeLoaded)
     }
@@ -50,7 +49,6 @@ function CharPage() {
     const onEpisodeLoaded = (episode) => {
         setEpisode(episode)
     }
-
     const errorMessage = error ? <ErrorMessage /> : null
     const spinner = loading ? <Spinner /> : null
     const content = !(loading || error || !char) ? <View char={char} episode={episode} /> : null

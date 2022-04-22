@@ -47,7 +47,7 @@
         &-column {
             max-height: 306px;
             overflow-y: auto;
-            overflow-x: visible;
+            overflow-x: hidden;
             &::-webkit-scrollbar {
                 width: 7px;
                 background-color: #edf0f0;

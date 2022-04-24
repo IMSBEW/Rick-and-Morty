@@ -1,6 +1,6 @@
 import './filters.scss'
 
-const SearchPanel = ({ onUpdateSearch }) => {
+const SearchPanel = ({ onUpdateSearch, width }) => {
     const getSearchRequest = (e) => {
         onUpdateSearch(e.target.value)
     }
@@ -12,7 +12,7 @@ const SearchPanel = ({ onUpdateSearch }) => {
                     type="text"
                     className="filter__item"
                     placeholder="Filter by name..."
-                    // style={{ width: width }}
+                    style={{ width: width }}
                     onChange={getSearchRequest}
                 />
             </form>

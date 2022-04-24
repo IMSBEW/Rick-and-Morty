@@ -65,8 +65,8 @@ function CharPage() {
 }
 
 const View = ({ char, episode }) => {
-    const { name, thumbnail } = char
-    const category = ['status', 'species', 'gender', 'origin', 'location']
+    const { name, thumbnail, location } = char
+    const category = ['status', 'species', 'gender', 'origin']
     const filterObjChar = Object.fromEntries(category.map(key => [key, char[key]]))
     return (
         <div className="char-page">
@@ -92,6 +92,17 @@ const View = ({ char, episode }) => {
                             <hr />
                         </div>
                     )}
+                    <div className="char-page__category">
+                        <div className='char-page__category-wrapper'>
+                            <div className='char-page__category-info'>
+                                <div className="char-page__category-title">Location</div>
+                                <div className="char-page__category-subtitle">{location}</div>
+
+                            </div>
+                            <img src={arrowMore} alt="arrow-more" />
+                        </div>
+                        <hr />
+                    </div>
                 </div>
                 <div className="char-page__column">
                     <p className="char-page__column-title">Episodes</p>

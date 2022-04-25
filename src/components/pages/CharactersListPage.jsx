@@ -15,10 +15,10 @@ const CharactersListPage = () => {
     const [nameFilter, setNameFilter] = useState('')
     const [searchRequest, setSearchRequest] = useState('')
 
-    const getTransferredFilters = (nameFilter, nameCategory, searchRequest) => {
+    const getTransferredFilters = (searchRequest, nameFilter, nameCategory) => {
+        setSearchRequest(searchRequest)
         setNameCategory(nameCategory)
         setNameFilter(nameFilter)
-        setSearchRequest(searchRequest)
     }
 
     return (
@@ -26,13 +26,13 @@ const CharactersListPage = () => {
             <img className="banner" src={banner} alt="banner" />
             <Filters
                 transferFilters={getTransferredFilters}
-                category={['Species', 'Gender']}
-                widthSearch={326}
+                category={['Species', 'Gender', 'Status']}
             />
             <CharList
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}
+                indentCard={8}
             />
         </>
     )

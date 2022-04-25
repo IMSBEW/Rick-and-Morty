@@ -9,6 +9,7 @@
     &__wrapper {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         width: 220px;
         min-height: 128px;
         background-color: #ffffff;
@@ -44,7 +45,7 @@
     &__row {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        text-align: center;
         margin: 0px -10px 10px -5px;
         padding: 0;
     }

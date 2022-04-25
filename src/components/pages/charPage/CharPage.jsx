@@ -19,16 +19,16 @@ function CharPage() {
     const [episode, setEpisode] = useState([])
 
     const { loading, error, getChar, getEpisodesId, clearError } = useAppService()
-
+    console.log(charId)
     useEffect(() => {
-        updateComic()
+        updateChar()
     }, [charId])
 
     useEffect(() => {
         updateEpisode()
     }, [countEpisode])
 
-    const updateComic = () => {
+    const updateChar = () => {
         clearError()
         getChar(charId)
             .then(onCharLoaded)

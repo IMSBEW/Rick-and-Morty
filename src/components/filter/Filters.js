@@ -11,7 +11,7 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
     const [nameFilter, setNameFilter] = useState('')
     const [searchRequest, setSearchRequest] = useState('')
 
-    useEffect(() => { getTransferredFilters() }, [nameCategory, nameFilter, searchRequest])
+    useEffect(() => { getTransferredFilters() }, [searchRequest, nameCategory, nameFilter])
 
     // console.log(category)
 
@@ -29,6 +29,14 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
         ],
         Status: [
             'alive', 'dead', 'unknown'
+        ],
+        Type: [
+            'female', 'male',
+            'genderless', 'unknown'
+        ],
+        Dimension: [
+            'female', 'male',
+            'genderless', 'unknown'
         ]
     }
 
@@ -45,7 +53,7 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
     }
 
     const getTransferredFilters = () => {
-        transferFilters(nameFilter, nameCategory, searchRequest)
+        transferFilters(searchRequest, nameFilter, nameCategory)
     }
 
     const clearFilter = () => {

@@ -1,34 +1,36 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import useAppService from '../../services/AppService'
 
 import Spinner from '../spinner/Spinner'
 import ErrorMessage from '../errorMessage/ErrorMessage'
 
-import './../cardList/cardList.scss'
+import '../cardList/cardList.scss'
 
-const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
+const CharList = ({ nameCategory, nameFilter, searchRequest, indentCard }) => {
     const [charList, setCharList] = useState([])
     const [newItemLoading, setNewItemLoading] = useState(false)
     const [offset, setOffset] = useState(2)
     const [req, setReq] = useState('')
     const [amount, setAmount] = useState(20)
     const [amountChars, setAmountChars] = useState(20)
-    const [indent, setIndent] = useState(8)
-
+    const [indent, setIndent] = useState(12)
+    console.log(indent)
+    console.log(charList)
     const { loading, error, clearError, getAllFilterChars, getAllChars } = useAppService()
+    const { pathname } = useLocation()
 
     useEffect(() => {
-        onRequestFilter(nameCategory, nameFilter, searchRequest, true)
-        setIndent(8)
+        onRequestFilter(nameCategory, nameFilter, searchRequest, pathname, true)
+        setIndent(indentCard)
     }, [nameCategory, searchRequest])
 
 
-    const onRequestFilter = (category, filter, search, initial) => {
+    const onRequestFilter = (category, filter, search, pathname, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true)
         clearError()
-        getAllFilterChars(category, filter, search)
+        getAllFilterChars(category, filter, search, pathname)
             .then(onCharListFilterLoaded)
     }
 
@@ -42,7 +44,7 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
     }
 
     const onRequest = (req, offset, amount) => {
-        setIndent(indent => indent + 8)
+        setIndent(indent => indent + indentCard)
         if (req !== null) {
             clearError()
             getAllChars(req, offset, amount)
@@ -54,7 +56,8 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
         const [chars, pages, amountChars] = data
         setAmountChars(amountChars)
         setNewItemLoading(false)
-        if (charList.length - indent <= 8) {
+        if (charList.length - indent <= indentCard) {
+            console.log('r')
             setOffset(offset => offset !== pages ? offset + 1 : offset)
             setAmount(amount => amount + 20)
             setCharList(charList => [...charList, ...chars])
@@ -67,10 +70,10 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
     function renderItems(arr) {
         const items = arr.map((item, index) => {
             if (item.count <= indent && !error) {
-                return (
-                    <li key={index} className='card' href='#'>
-                        <Link to={`/char/${item.id}`}>
-                            <div className="card__wrapper">
+                const filterItems = () => {
+                    if (item.status) {
+                        return (
+                            <>
                                 <div className="card__image">
                                     <img src={item.thumbnail} alt={item.name} />
                                 </div>
@@ -78,6 +81,35 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
                                     <div className="card__title">{item.name}</div>
                                     <div className="card__text">{item.species}</div>
                                 </div>
+                            </>
+                        )
+                    } else if (item.dimension) {
+                        return (
+                            <>
+                                <div className="card__info" >
+                                    <div className="card__title">{item.name}</div>
+                                    <div className="card__text">{item.type}</div>
+                                    <div className="card__text">{item.dimension}</div>
+                                </div>
+                            </>
+                        )
+                    } else {
+                        return (
+                            <>
+                                <div className="card__info" >
+                                    <div className="card__title">{item.name}</div>
+                                    <div className="card__text">{item.air_date}</div>
+                                    <div className="card__text">{item.episode}</div>
+                                </div>
+                            </>
+                        )
+                    }
+                }
+                return (
+                    <li key={index} className='card' href='#'>
+                        <Link to={`/char/${item.id}`}>
+                            <div className="card__wrapper">
+                                {filterItems()}
                             </div>
                         </Link>
                     </li >
@@ -107,13 +139,12 @@ const CharList = ({ nameCategory, nameFilter, searchRequest }) => {
 
     return (
         <>
-
             <div className="card-list">
                 {errorMessage}
                 {spinner}
                 {items}
                 <div className="button">
-                    {amountChars >= indent && !error && charList.length > 8 ? buttonLoad() : null}
+                    {amountChars >= indent && !error && charList.length > indentCard ? buttonLoad() : null}
                 </div>
             </div>
         </>

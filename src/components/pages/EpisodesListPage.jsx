@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import CharsList from '../charsList/CharsList'
 
+import CardsList from '../cardsList/CardsList'
 
 import '../filter/filters.scss'
 
 import banner from '../../assets/img/locationspagebanner.png'
 import Filters from '../filter/Filters'
 
-const EpisodesListPage = () => {
+const EpisodeListPage = () => {
     const [searchRequest, setSearchRequest] = useState('')
 
     const getTransferredFilters = (searchRequest) => {
@@ -23,7 +23,7 @@ const EpisodesListPage = () => {
                 category={[]}
                 widthSearch={500}
             />
-            <CharsList
+            <CardsList
                 searchRequest={searchRequest}
                 indentCard={16}
             />
@@ -31,6 +31,6 @@ const EpisodesListPage = () => {
     )
 }
 
-export default EpisodesListPage
+export default EpisodeListPage
 
 

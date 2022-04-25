@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 // import SearchPanel from '../filter/SearchPanel'
 // import FilterPanel from '../filter/FilterPanel'
-import CharList from '../charsList/CharsList'
+import CardsList from '../cardsList/CardsList'
 
 
 import '../filter/filters.scss'
@@ -10,7 +10,7 @@ import '../filter/filters.scss'
 import banner from '../../assets/img/charspagebanner.png'
 import Filters from '../filter/Filters'
 
-const CharactersListPage = () => {
+const CharacterListPage = () => {
     const [nameCategory, setNameCategory] = useState('')
     const [nameFilter, setNameFilter] = useState('')
     const [searchRequest, setSearchRequest] = useState('')
@@ -28,7 +28,7 @@ const CharactersListPage = () => {
                 transferFilters={getTransferredFilters}
                 category={['Species', 'Gender', 'Status']}
             />
-            <CharList
+            <CardsList
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}
@@ -38,4 +38,4 @@ const CharactersListPage = () => {
     )
 }
 
-export default CharactersListPage
+export default CharacterListPage

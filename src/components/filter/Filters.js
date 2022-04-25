@@ -13,8 +13,6 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
 
     useEffect(() => { getTransferredFilters() }, [searchRequest, nameCategory, nameFilter])
 
-    // console.log(category)
-
     const arrNameCategory = {
         Species: [
             'human', 'alien',
@@ -29,14 +27,6 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
         ],
         Status: [
             'alive', 'dead', 'unknown'
-        ],
-        Type: [
-            'female', 'male',
-            'genderless', 'unknown'
-        ],
-        Dimension: [
-            'female', 'male',
-            'genderless', 'unknown'
         ]
     }
 

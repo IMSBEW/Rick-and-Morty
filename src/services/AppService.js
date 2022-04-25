@@ -3,31 +3,28 @@ import { useHttp } from "../hooks/http.hook"
 const useAppService = () => {
     const { loading, request, error, clearError } = useHttp()
 
-    const getAllFilterChars = async (category, filter, searchRequest, section) => {
+    const getAllFilterCards = async (category, filter, searchRequest, section) => {
         if (section.length === 1) {
             section = '/character'
         } else {
             section = section.slice(0, -1)
         }
         const response = await request(`https://rickandmortyapi.com/api${section}/?name=${searchRequest}&${filter}=${category}`)
-        const charList = response.results.map(_transformCharacter)
-        charList.map((item, index) => item.count = index + 1)
-        return [response.info.next, charList]
+        const cardList = response.results.map(_transformCard)
+        cardList.map((item, index) => item.count = index + 1)
+        return [response.info.next, cardList]
     }
 
-    const getAllChars = async (req, offset, amount) => {
-        console.log(amount)
+    const getAllCards = async (req, offset, amount) => {
         const response = await request(`${req.replace(/page=2/gi, `page=${offset}`)}`)
-        const charList = response.results.map(_transformCharacter)
-        console.log(response)
-        charList.map((item, index) => item.count = index + 1 + amount)
-        console.log(charList)
-        return [charList, response.info.pages, response.info.count]
+        const cardList = response.results.map(_transformCard)
+        cardList.map((item, index) => item.count = index + 1 + amount)
+        return [cardList, response.info.pages, response.info.count]
     }
 
     const getChar = async (id) => {
         const response = await request(`https://rickandmortyapi.com/api/character/${id}`)
-        return _transformCharacter(response)
+        return _transformCard(response)
     }
 
     const getEpisodesId = async (id) => {
@@ -38,35 +35,35 @@ const useAppService = () => {
         return arrResponse.map(_transformEpisode)
     }
 
-    const _transformCharacter = (char) => {
-        if (char.status) {
+    const _transformCard = (card) => {
+        if (card.status) {
             return {
-                count: char.count,
-                id: char.id,
-                name: char.name,
-                status: char.status,
-                species: char.species,
-                gender: char.gender,
-                origin: char.origin.name,
-                location: char.location.name,
-                thumbnail: char.image,
-                episode: char.episode,
+                count: card.count,
+                id: card.id,
+                name: card.name,
+                status: card.status,
+                species: card.species,
+                gender: card.gender,
+                origin: card.origin.name,
+                location: card.location.name,
+                thumbnail: card.image,
+                episode: card.episode,
             }
-        } else if (char.dimension) {
+        } else if (card.residents) {
             return {
-                count: char.count,
-                id: char.id,
-                name: char.name,
-                type: char.type,
-                dimension: char.dimension
+                count: card.count,
+                id: card.id,
+                name: card.name,
+                type: card.type,
+                dimension: card.dimension
             }
-        } else if (char.air_date) {
+        } else if (card.air_date) {
             return {
-                count: char.count,
-                id: char.id,
-                name: char.name,
-                air_date: char.air_date,
-                episode: char.episode,
+                count: card.count,
+                id: card.id,
+                name: card.name,
+                air_date: card.air_date,
+                episode: card.episode,
             }
         }
     }
@@ -85,8 +82,8 @@ const useAppService = () => {
         loading,
         error,
         clearError,
-        getAllFilterChars,
-        getAllChars,
+        getAllFilterCards,
+        getAllCards,
         getChar,
         getEpisodesId,
     }

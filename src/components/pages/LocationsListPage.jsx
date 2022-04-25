@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import CharsList from '../charsList/CharsList'
 
+import CardsList from '../cardsList/CardsList'
+import Filters from '../filter/Filters'
+
+import banner from '../../assets/img/locationspagebanner.png'
 
 import '../filter/filters.scss'
 
-import banner from '../../assets/img/locationspagebanner.png'
-import Filters from '../filter/Filters'
 
 const LocationsListPage = () => {
     const [nameCategory, setNameCategory] = useState('')
@@ -23,10 +24,10 @@ const LocationsListPage = () => {
             <img className="banner" src={banner} alt="banner" />
             <Filters
                 transferFilters={getTransferredFilters}
-                category={['Type', 'Dimension']}
-                widthSearch={326}
+                category={[]}
+                widthSearch={500}
             />
-            <CharsList
+            <CardsList
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}

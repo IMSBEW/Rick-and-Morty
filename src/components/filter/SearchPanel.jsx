@@ -11,7 +11,7 @@ const SearchPanel = ({ onUpdateSearch, width }) => {
                 <input
                     type="text"
                     className="filter__item"
-                    placeholder="Filter by name..."
+                    placeholder={'Filter by name...'}
                     style={{ width: width }}
                     onChange={getSearchRequest}
                 />

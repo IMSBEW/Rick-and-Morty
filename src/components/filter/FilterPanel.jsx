@@ -1,6 +1,10 @@
+import { useState } from 'react'
+
 import arrow from '../../assets/img/arrow.svg'
 
 const FilterPanel = ({ nameFilter, nameCategory, onClickName, onMouseOverFilter }) => {
+    const [searchRequest, setSearchRequest] = useState('')
+
     const getNameCategory = (e) => {
         onClickName(e.target.textContent)
     }

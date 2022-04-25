@@ -1,8 +1,9 @@
 @import "../../styles/vars.scss";
 
 .card {
-    display: flex;
     margin-bottom: 24px;
+    display: flex;
+    align-items: stretch;
     padding: 0 10px;
     flex: 0 1 25%;
     cursor: pointer;
@@ -16,6 +17,7 @@
         box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
         border-radius: 4px;
         transition: 0.3s;
+        padding: 5px;
         &:hover {
             box-shadow: 2px 2px 7px 2px #cccccc;
             background: darken($color: #ffffff, $amount: 10);

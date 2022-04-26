@@ -1,34 +1,23 @@
 import { useState, useEffect } from 'react'
 
+import usefilterService from "../../services/FilterService"
+
 import SearchPanel from '../filter/SearchPanel'
 import FilterPanel from '../filter/FilterPanel'
+import FilterSearch from '../filter/FilterSearch'
 
 
 import '../filter/filters.scss'
 
-const Filters = ({ transferFilters, category, widthSearch }) => {
+const Filters = ({ transferFilters, category, widthSearch, filterSearch }) => {
     const [nameCategory, setNameCategory] = useState('')
     const [nameFilter, setNameFilter] = useState('')
     const [searchRequest, setSearchRequest] = useState('')
+    const [valueInput, setValueInput] = useState('')
 
-    useEffect(() => { getTransferredFilters() }, [searchRequest, nameCategory, nameFilter])
+    const { dataFilterCharacters } = usefilterService()
 
-    const arrNameCategory = {
-        Species: [
-            'human', 'alien',
-            'humanoid', 'unknown',
-            'poopybutthole', 'mythologi',
-            'animal', 'robot', 'cronenberg',
-            'disease'
-        ],
-        Gender: [
-            'female', 'male',
-            'genderless', 'unknown'
-        ],
-        Status: [
-            'alive', 'dead', 'unknown'
-        ]
-    }
+    useEffect(() => { getTransferredFilters() }, [searchRequest, valueInput, nameCategory, nameFilter])
 
     const getNameCategory = (name) => {
         setNameCategory(name)
@@ -42,8 +31,12 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
         setSearchRequest(req)
     }
 
+    const getValueInput = (value) => {
+        setValueInput(value)
+    }
+
     const getTransferredFilters = () => {
-        transferFilters(searchRequest, nameFilter, nameCategory)
+        transferFilters(searchRequest, valueInput, nameFilter, nameCategory)
     }
 
     const clearFilter = () => {
@@ -60,7 +53,7 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
     }
 
 
-    const filters = Object.entries(Object.fromEntries(category.map(key => [key, arrNameCategory[key]]))).map((item, index) => {
+    const filters = Object.entries(Object.fromEntries(category.map(key => [key, dataFilterCharacters[key]]))).map((item, index) => {
         return (
             <FilterPanel
                 key={index}
@@ -70,6 +63,9 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
                 onMouseOverFilter={getNameFilter} />
         )
     })
+
+    const formSearchFilter = filterSearch ? <FilterSearch transferValue={getValueInput} width={widthSearch} /> : null
+
     return (
         <>
             <div className="filter__wrapper">
@@ -78,6 +74,7 @@ const Filters = ({ transferFilters, category, widthSearch }) => {
                     width={widthSearch}
                 />
                 {filters}
+                {formSearchFilter}
             </div>
             <div className="button">
                 {nameCategory ? buttonClearFilter() : null}

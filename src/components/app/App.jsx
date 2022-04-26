@@ -10,7 +10,6 @@ const CharactersListPage = lazy(() => import('../pages/CharactersListPage'))
 const LocationsListPage = lazy(() => import('../pages/LocationsListPage'))
 const EpisodesListPage = lazy(() => import('../pages/EpisodesListPage'))
 const CharPage = lazy(() => import('../pages/charPage/CharPage'))
-// import CardPage from '../pages/cardPage/CardPage'
 
 const App = () => {
     return (
@@ -24,7 +23,7 @@ const App = () => {
                                 <Route path='/' element={<CharactersListPage />} />
                                 <Route path='/char/:charId' element={<CharPage />} />
                                 <Route path='/locations' element={<LocationsListPage />} />
-                                <Route path='/epsodes' element={<EpisodesListPage />} />
+                                <Route path='/episodes' element={<EpisodesListPage />} />
                             </Routes>
                         </Suspense>
                     </div>

@@ -20,11 +20,13 @@
         padding: 5px;
         &:hover {
             box-shadow: 2px 2px 7px 2px #cccccc;
+            transform: scale(1.1);
             background: darken($color: #ffffff, $amount: 10);
         }
     }
     &__info {
         padding: 16px;
+        height: 110px;
     }
     &__image {
         height: 168px;

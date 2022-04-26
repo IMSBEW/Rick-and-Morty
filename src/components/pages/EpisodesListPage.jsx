@@ -7,7 +7,7 @@ import '../filter/filters.scss'
 import banner from '../../assets/img/locationspagebanner.png'
 import Filters from '../filter/Filters'
 
-const EpisodeListPage = () => {
+const EpisodesListPage = () => {
     const [searchRequest, setSearchRequest] = useState('')
 
     const getTransferredFilters = (searchRequest) => {
@@ -22,6 +22,7 @@ const EpisodeListPage = () => {
                 transferFilters={getTransferredFilters}
                 category={[]}
                 widthSearch={500}
+                filterSearch={false}
             />
             <CardsList
                 searchRequest={searchRequest}
@@ -31,6 +32,6 @@ const EpisodeListPage = () => {
     )
 }
 
-export default EpisodeListPage
+export default EpisodesListPage
 
 

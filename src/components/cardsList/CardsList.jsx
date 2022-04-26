@@ -8,7 +8,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage'
 
 import './cardsList.scss'
 
-const CardsList = ({ nameCategory, nameFilter, searchRequest, indentCard }) => {
+const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indentCard }) => {
     const [cardList, setCardList] = useState([])
     const [newItemLoading, setNewItemLoading] = useState(false)
     const [offset, setOffset] = useState(2)
@@ -21,15 +21,15 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, indentCard }) => {
     const { pathname } = useLocation()
 
     useEffect(() => {
-        onRequestFilter(nameCategory, nameFilter, searchRequest, pathname, true)
+        onRequestFilter(nameCategory, nameFilter, searchRequest, valueInput, pathname, true)
         setIndent(indentCard)
-    }, [nameCategory, searchRequest])
+    }, [nameCategory, searchRequest, valueInput])
 
 
-    const onRequestFilter = (category, filter, search, pathname, initial) => {
+    const onRequestFilter = (category, filter, search, valueInput, pathname, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true)
         clearError()
-        getAllFilterCards(category, filter, search, pathname)
+        getAllFilterCards(category, filter, search, valueInput, pathname)
             .then(onCardListFilterLoaded)
     }
 

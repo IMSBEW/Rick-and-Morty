@@ -3,13 +3,17 @@ import { useHttp } from "../hooks/http.hook"
 const useAppService = () => {
     const { loading, request, error, clearError } = useHttp()
 
-    const getAllFilterCards = async (category, filter, searchRequest, section) => {
+    const getAllFilterCards = async (category, filter, searchRequest, valueInput, section) => {
+        if (!valueInput) {
+            valueInput = ''
+        }
         if (section.length === 1) {
             section = '/character'
         } else {
             section = section.slice(0, -1)
         }
-        const response = await request(`https://rickandmortyapi.com/api${section}/?name=${searchRequest}&${filter}=${category}`)
+
+        const response = await request(`https://rickandmortyapi.com/api${section}/?name=${searchRequest}&${filter}=${category}&type=${valueInput}`)
         const cardList = response.results.map(_transformCard)
         cardList.map((item, index) => item.count = index + 1)
         return [response.info.next, cardList]

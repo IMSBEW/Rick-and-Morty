@@ -27,12 +27,14 @@ const CharacterListPage = () => {
             <Filters
                 transferFilters={getTransferredFilters}
                 category={['Species', 'Gender', 'Status']}
+                widthSearch={''}
+                filterSearch={false}
             />
             <CardsList
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}
-                indentCard={8}
+                indentCard={19}
             />
         </>
     )

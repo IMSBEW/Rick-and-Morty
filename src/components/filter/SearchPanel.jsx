@@ -1,9 +1,10 @@
-import './filters.scss'
-
 const SearchPanel = ({ onUpdateSearch, width }) => {
     const getSearchRequest = (e) => {
         onUpdateSearch(e.target.value)
     }
+
+
+
 
     return (
         <div className="search">
@@ -11,7 +12,7 @@ const SearchPanel = ({ onUpdateSearch, width }) => {
                 <input
                     type="text"
                     className="filter__item"
-                    placeholder={'Filter by name...'}
+                    placeholder={'Search by name...'}
                     style={{ width: width }}
                     onChange={getSearchRequest}
                 />

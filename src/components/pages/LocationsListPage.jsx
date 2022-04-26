@@ -12,11 +12,13 @@ const LocationsListPage = () => {
     const [nameCategory, setNameCategory] = useState('')
     const [nameFilter, setNameFilter] = useState('')
     const [searchRequest, setSearchRequest] = useState('')
+    const [valueInput, setValueInput] = useState('')
 
-    const getTransferredFilters = (searchRequest, nameFilter, nameCategory) => {
+    const getTransferredFilters = (searchRequest, valueInput, nameFilter, nameCategory) => {
         setSearchRequest(searchRequest)
         setNameCategory(nameCategory)
         setNameFilter(nameFilter)
+        setValueInput(valueInput)
     }
 
     return (
@@ -25,12 +27,14 @@ const LocationsListPage = () => {
             <Filters
                 transferFilters={getTransferredFilters}
                 category={[]}
-                widthSearch={500}
+                widthSearch={300}
+                filterSearch={true}
             />
             <CardsList
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}
+                valueInput={valueInput}
                 indentCard={12}
             />
         </>

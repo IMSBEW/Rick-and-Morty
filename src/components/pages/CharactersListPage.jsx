@@ -34,7 +34,7 @@ const CharacterListPage = () => {
                 nameCategory={nameCategory}
                 nameFilter={nameFilter}
                 searchRequest={searchRequest}
-                indentCard={19}
+                indentCard={8}
             />
         </>
     )

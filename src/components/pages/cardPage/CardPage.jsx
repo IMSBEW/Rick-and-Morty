@@ -1,35 +1,95 @@
-// import ButtonBack from "../../buttons/ButtonBack"
-import CharsList from "../../charsList/CharsList"
+import { useParams, useLocation, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+
+import useAppService from '../../../services/AppService'
+
+import Spinner from './../../spinner/Spinner'
+import ErrorMessage from './../../errorMessage/ErrorMessage'
+
+import arrow from './../../../assets/img/arrow-back.svg'
+
+import CardsList from "../../cardsList/CardsList"
 
 import './cardPage.scss'
 
 function CardPage() {
+    const [card, setCard] = useState(null)
+    const [countCard, setCountCard] = useState([])
+
+    const { cardId } = useParams()
+    const { pathname } = useLocation()
+
+    const { loading, error, getCard, clearError } = useAppService()
+
+
+    useEffect(() => {
+        updateCard()
+    }, [cardId])
+
+    const updateCard = () => {
+        clearError()
+        getCard(pathname)
+            .then(onCardLoaded)
+    }
+
+    const onCardLoaded = (card) => {
+        console.log(card)
+        const idCard = card.residents.map(id => +id.slice(42))
+        setCountCard(idCard)
+        setCard(card)
+    }
+
+    const errorMessage = error ? <ErrorMessage /> : null
+    const spinner = loading ? <Spinner /> : null
+    const content = !(loading || error || !card) ? <View card={card} countCard={countCard} /> : null
+
+    return (
+        <>
+            {errorMessage}
+            {spinner}
+            {content}
+        </>
+    )
+}
+
+const View = ({ card, countCard }) => {
+    const { name, type, dimension } = card
     return (
         <div className="card-page">
             <div className="card-page__info">
                 <div className="card-page__row">
-                    {/* <ButtonBack /> */}
+                    <div className="button" style={{ position: 'absolute' }}>
+                        <img src={arrow} alt="arrow" />
+                        <Link to='/locations'><button className="button-back">GO BACK</button></Link>
+                    </div>
                     <div className="card-page__body">
                         <div className="card-page__wrapper">
-                            <div className="card-page__title">Earth (Replacement Dimension)
+                            <div className="card-page__title">{name}
                             </div>
                             <div className="card-page__category">
                                 <div className="card-page__category-wrapper">
                                     <p className="card-page__category-title">Type</p>
-                                    <p className="card-page__category-info">Planet</p>
+                                    <p className="card-page__category-info">{type}</p>
                                 </div>
                                 <div className="card-page__category-wrapper">
                                     <p className="card-page__category-title">Dimension</p>
-                                    <p className="card-page__category-info">Replacement Dimension</p>
+                                    <p className="card-page__category-info">{dimension}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <p className="card-page__name">Residents</p>
-            <CharsList />
+            <p className="card-page__name">Residents:</p>
+            <CardsList
+                nameCategory={''}
+                nameFilter={''}
+                searchRequest={''}
+                indentCard={''}
+                idCards={countCard}
+            />
         </div>
     )
 }
+
 export default CardPage

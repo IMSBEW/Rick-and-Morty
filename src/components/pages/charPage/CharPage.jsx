@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 import useAppService from '../../../services/AppService'
@@ -13,16 +13,17 @@ import './charPage.scss'
 
 
 function CharPage() {
-    const { charId } = useParams()
+    const { cardId } = useParams()
+    const { pathname } = useLocation()
     const [char, setChar] = useState(null)
     const [countEpisode, setCountEpisode] = useState([])
     const [episode, setEpisode] = useState([])
 
-    const { loading, error, getChar, getEpisodesId, clearError } = useAppService()
-    console.log(charId)
+    const { loading, error, getCard, getEpisodesId, clearError } = useAppService()
+
     useEffect(() => {
         updateChar()
-    }, [charId])
+    }, [cardId])
 
     useEffect(() => {
         updateEpisode()
@@ -30,7 +31,7 @@ function CharPage() {
 
     const updateChar = () => {
         clearError()
-        getChar(charId)
+        getCard(pathname)
             .then(onCharLoaded)
     }
 
@@ -61,11 +62,12 @@ function CharPage() {
         </>
     )
 
-
 }
 
 const View = ({ char, episode }) => {
-    const { name, thumbnail, location } = char
+    console.log(episode)
+    const { name, thumbnail, location, locationUrl } = char
+    const locacationLink = locationUrl.slice(32)
     const category = ['status', 'species', 'gender', 'origin']
     const filterObjChar = Object.fromEntries(category.map(key => [key, char[key]]))
     return (
@@ -99,7 +101,7 @@ const View = ({ char, episode }) => {
                                 <div className="char-page__category-subtitle">{location}</div>
 
                             </div>
-                            <img src={arrowMore} alt="arrow-more" />
+                            <Link to={`/${locacationLink}`}>  <img src={arrowMore} alt="arrow-more" /></Link>
                         </div>
                         <hr />
                     </div>
@@ -116,7 +118,9 @@ const View = ({ char, episode }) => {
                                             <div className="char-page__category-subtitle">{item.name}</div>
                                             <div className="char-page__category-date">{item.date}</div>
                                         </div>
-                                        <img src={arrowMore} alt="arrow-more" />
+                                        <Link to={`/${locacationLink}`}>
+                                            <img src={arrowMore} alt="arrow-more" />
+                                        </Link>
                                     </div>
                                     <hr />
                                 </div>

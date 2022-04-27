@@ -8,7 +8,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage'
 
 import './cardsList.scss'
 
-const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indentCard }) => {
+const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indentCard, idCards }) => {
     const [cardList, setCardList] = useState([])
     const [newItemLoading, setNewItemLoading] = useState(false)
     const [offset, setOffset] = useState(2)
@@ -17,19 +17,22 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
     const [amountCards, setAmountCards] = useState(20)
     const [indent, setIndent] = useState(indentCard)
 
-    const { loading, error, clearError, getAllFilterCards, getAllCards } = useAppService()
     const { pathname } = useLocation()
 
+    const { loading, error, clearError, getAllFilterCards, getAllCards } = useAppService()
+
+    console.log(indentCard)
+
     useEffect(() => {
-        onRequestFilter(nameCategory, nameFilter, searchRequest, valueInput, pathname, true)
+        onRequestFilter(nameCategory, nameFilter, searchRequest, valueInput, pathname, idCards, true)
         setIndent(indentCard)
-    }, [nameCategory, searchRequest, valueInput])
+    }, [nameCategory, searchRequest, valueInput, idCards])
 
 
-    const onRequestFilter = (category, filter, search, valueInput, pathname, initial) => {
+    const onRequestFilter = (category, filter, search, valueInput, pathname, idCards, initial) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true)
         clearError()
-        getAllFilterCards(category, filter, search, valueInput, pathname)
+        getAllFilterCards(category, filter, search, valueInput, pathname, idCards)
             .then(onCardListFilterLoaded)
     }
 
@@ -68,11 +71,11 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
 
     function renderItems(arr) {
         const items = arr.map((item, index) => {
-            if (item.count <= indent && !error) {
+            if (item.count <= indent && !error || !item.count) {
                 const filterItems = () => {
                     if (item.status) {
                         return (
-                            <>
+                            <Link className={'card__wrapper'} to={`/character/${item.id}`}>
                                 <div className="card__image">
                                     <img src={item.thumbnail} alt={item.name} />
                                 </div>
@@ -80,16 +83,22 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
                                     <div className="card__title">{item.name}</div>
                                     <div className="card__text">{item.species}</div>
                                 </div>
-                            </>
+                            </Link>
                         )
                     } else if (item.dimension) {
                         return (
-                            <>
+                            <Link className={'card__wrapper'}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center'
+                                }}
+                                to={`/location/${item.id}`}>
                                 <div className="card__info" >
                                     <div className="card__title">{item.name}</div>
                                     <div className="card__text">{item.type}</div>
                                 </div>
-                            </>
+                            </Link>
                         )
                     } else {
                         return (
@@ -103,9 +112,7 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
                 }
                 return (
                     <div key={index} className='card' href='#'>
-                        <Link className={'card__wrapper'} to={`/char/${item.id}`}>
-                            {filterItems()}
-                        </Link>
+                        {filterItems()}
                     </div >
                 )
             }
@@ -138,7 +145,7 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
                 {spinner}
                 {items}
                 <div className="button">
-                    {amountCards >= indent && !error && cardList.length > indentCard ? buttonLoad() : null}
+                    {amountCards >= indent && !error && cardList.length > indentCard && indentCard ? buttonLoad() : null}
                 </div>
             </div>
         </>

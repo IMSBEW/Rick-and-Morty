@@ -10,6 +10,7 @@ const CharactersListPage = lazy(() => import('../pages/CharactersListPage'))
 const LocationsListPage = lazy(() => import('../pages/LocationsListPage'))
 const EpisodesListPage = lazy(() => import('../pages/EpisodesListPage'))
 const CharPage = lazy(() => import('../pages/charPage/CharPage'))
+const CardPage = lazy(() => import('../pages/cardPage/CardPage'))
 
 const App = () => {
     return (
@@ -21,9 +22,10 @@ const App = () => {
                         <Suspense fallback={<Spinner />}>
                             <Routes>
                                 <Route path='/' element={<CharactersListPage />} />
-                                <Route path='/char/:charId' element={<CharPage />} />
+                                <Route path='/character/:cardId' element={<CharPage />} />
                                 <Route path='/locations' element={<LocationsListPage />} />
                                 <Route path='/episodes' element={<EpisodesListPage />} />
+                                <Route path='/location/:cardId' element={<CardPage />} />
                             </Routes>
                         </Suspense>
                     </div>

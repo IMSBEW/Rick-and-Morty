@@ -8,9 +8,6 @@
     flex: 0 1 25%;
     cursor: pointer;
     &__wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         width: 220px;
         min-height: 128px;
         background-color: #ffffff;
@@ -25,8 +22,9 @@
         }
     }
     &__info {
+        display: flex;
+        flex-direction: column;
         padding: 16px;
-        height: 110px;
     }
     &__image {
         height: 168px;

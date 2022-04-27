@@ -21,7 +21,6 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
 
     const { loading, error, clearError, getAllFilterCards, getAllCards } = useAppService()
 
-    console.log(indentCard)
 
     useEffect(() => {
         onRequestFilter(nameCategory, nameFilter, searchRequest, valueInput, pathname, idCards, true)
@@ -35,7 +34,6 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
         getAllFilterCards(category, filter, search, valueInput, pathname, idCards)
             .then(onCardListFilterLoaded)
     }
-
 
     const onCardListFilterLoaded = (data) => {
         const [request, chars] = data
@@ -53,7 +51,6 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
                 .then(onCardListLoaded)
         }
     }
-
 
     const onCardListLoaded = (data) => {
         const [cards, pages, amountCards] = data
@@ -103,9 +100,17 @@ const CardsList = ({ nameCategory, nameFilter, searchRequest, valueInput, indent
                     } else {
                         return (
                             <>
-                                <div className="card__title">{item.name}</div>
-                                <div className="card__text">{item.air_date}</div>
-                                <div className="card__text" style={{ fontWeight: 'bold' }}>{item.episode}</div>
+                                <Link className={'card__wrapper'}
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center'
+                                    }}
+                                    to={`/episode/${item.id}`}>
+                                    <div className="card__title">{item.name}</div>
+                                    <div className="card__text">{item.air_date}</div>
+                                    <div className="card__text" style={{ fontWeight: 'bold' }}>{item.episode}</div>
+                                </Link>
                             </>
                         )
                     }

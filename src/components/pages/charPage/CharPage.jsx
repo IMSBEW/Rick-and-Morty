@@ -13,13 +13,16 @@ import './charPage.scss'
 
 
 function CharPage() {
-    const { cardId } = useParams()
-    const { pathname } = useLocation()
     const [char, setChar] = useState(null)
     const [countEpisode, setCountEpisode] = useState([])
     const [episode, setEpisode] = useState([])
 
+    const { cardId } = useParams()
+    const { pathname } = useLocation()
+
     const { loading, error, getCard, getEpisodesId, clearError } = useAppService()
+
+    console.log(pathname)
 
     useEffect(() => {
         updateChar()

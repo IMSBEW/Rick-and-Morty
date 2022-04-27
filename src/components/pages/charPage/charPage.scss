@@ -68,6 +68,9 @@
                     width: 30px;
                 }
             }
+            a {
+                display: flex;
+            }
         }
         &-title {
             font-weight: 700;

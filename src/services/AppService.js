@@ -4,7 +4,6 @@ const useAppService = () => {
     const { loading, request, error, clearError } = useHttp()
 
     const getAllFilterCards = async (category, filter, searchRequest, valueInput, section, id) => {
-        console.log(id)
         if (!valueInput) {
             valueInput = ''
         }
@@ -38,6 +37,7 @@ const useAppService = () => {
 
     const getCard = async (section) => {
         const response = await request(`https://rickandmortyapi.com/api${section}`)
+        console.log(response)
         return _transformCard(response)
     }
 
@@ -80,6 +80,7 @@ const useAppService = () => {
                 name: card.name,
                 air_date: card.air_date,
                 episode: card.episode,
+                residents: card.characters
             }
         }
     }
